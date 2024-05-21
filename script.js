@@ -6,9 +6,7 @@ let currFolder;
 ///////////////// fetching song from the playlist////////////////////////////
 async function getPlaylist(folder) {
   currFolder = folder;
-  let songs = await fetch(
-    `https://github.com/Jaya-Vashisth/Music-Webplayer/${folder}`
-  );
+  let songs = await fetch(`./${folder}`);
   let response = await songs.text();
 
   let div = document.createElement("div");
@@ -59,9 +57,7 @@ async function getPlaylist(folder) {
 
 // display albums on the page
 async function displayAlbums() {
-  let a = await fetch(
-    `https://github.com/Jaya-Vashisth/Music-Webplayer/playlists/`
-  );
+  let a = await fetch(`./playlists/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -76,9 +72,7 @@ async function displayAlbums() {
       console.log(folders);
 
       //get the metadata of the folder
-      let a = await fetch(
-        `https://github.com/Jaya-Vashisth/Music-Webplayer/playlists/${folders}/info.json`
-      );
+      let a = await fetch(`./playlists/${folders}/info.json`);
 
       let response = await a.json();
       // console.log(response.title);
@@ -94,7 +88,7 @@ async function displayAlbums() {
                   stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
           </svg>
       </div>
-      <img src="https://github.com/Jaya-Vashisth/Music-Webplayer/playlists/${folders}/cover.jpg" alt="">
+      <img src="./playlists/${folders}/cover.jpg" alt="">
       <h2>${response.title}</h2>
       <p>${response.description}</p>
   </div>`;
@@ -105,7 +99,7 @@ async function displayAlbums() {
   Array.from(document.getElementsByClassName("playCard")).forEach((e) => {
     e.addEventListener("click", async (item) => {
       // console.log(item.currentTarget);
-      await getPlaylist(`playlists/${item.currentTarget.dataset.folder}`);
+      await getPlaylist(`./playlists/${item.currentTarget.dataset.folder}`);
       currentSong.src = playlist[0];
       playMusic(playlist[0]);
     });
@@ -129,8 +123,7 @@ function secondsToMinuteSeconds(seconds) {
 
 // function play the music
 const playMusic = (track, pause = false) => {
-  currentSong.src =
-    `https://github.com/Jaya-Vashisth/Music-Webplayer/${currFolder}/` + track;
+  currentSong.src = `./${currFolder}/` + track;
 
   track = track.split("%20").join(" ");
   if (!pause) {
@@ -147,9 +140,7 @@ const playMusic = (track, pause = false) => {
 
 async function main() {
   //get the whole playlist
-  await getPlaylist(
-    "https://github.com/Jaya-Vashisth/Music-Webplayer/playlists/Bright_(mood)"
-  );
+  await getPlaylist("./playlists/Bright_(mood)");
   //set the 1st song by default in play bar
   playMusic(playlist[0]);
 
