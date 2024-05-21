@@ -6,7 +6,7 @@ let currFolder;
 ///////////////// fetching song from the playlist////////////////////////////
 async function getPlaylist(folder) {
   currFolder = folder;
-  let songs = await fetch(`http://127.0.0.1:3000/${folder}`);
+  let songs = await fetch(`${folder}`);
   let response = await songs.text();
 
   let div = document.createElement("div");
