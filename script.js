@@ -57,7 +57,7 @@ async function getPlaylist(folder) {
 
 // display albums on the page
 async function displayAlbums() {
-  let a = await fetch(`http://127.0.0.1:3000/playlists/`);
+  let a = await fetch(`playlists/`);
   let response = await a.text();
   let div = document.createElement("div");
   div.innerHTML = response;
@@ -72,9 +72,7 @@ async function displayAlbums() {
       console.log(folders);
 
       //get the metadata of the folder
-      let a = await fetch(
-        `http://127.0.0.1:3000/playlists/${folders}/info.json`
-      );
+      let a = await fetch(`playlists/${folders}/info.json`);
 
       let response = await a.json();
       // console.log(response.title);
@@ -90,7 +88,7 @@ async function displayAlbums() {
                   stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
           </svg>
       </div>
-      <img src="http://127.0.0.1:3000/playlists/${folders}/cover.jpg" alt="">
+      <img src="playlists/${folders}/cover.jpg" alt="">
       <h2>${response.title}</h2>
       <p>${response.description}</p>
   </div>`;
@@ -125,7 +123,7 @@ function secondsToMinuteSeconds(seconds) {
 
 // function play the music
 const playMusic = (track, pause = false) => {
-  currentSong.src = `http://127.0.0.1:3000/${currFolder}/` + track;
+  currentSong.src = `${currFolder}/` + track;
 
   track = track.split("%20").join(" ");
   if (!pause) {
